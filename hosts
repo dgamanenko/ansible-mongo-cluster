@@ -1,11 +1,14 @@
+[all:children]
+mongo
+
 [mongo:children]
 arbiter1
 mongo1
 mongo2
 
 [arbiter1]
-x.x.x.2 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=~/.ssh/private_key
+10.0.1.205 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=~/.ssh/vfq_id_rsa.private
 [mongo1]
-x.x.x.2 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=~/.ssh/private_key
+10.0.1.35 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=~/.ssh/vfq_id_rsa.private
 [mongo2]
-x.x.x.3 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=~/.ssh/private_key
+10.0.3.51 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=~/.ssh/vfq_id_rsa.private

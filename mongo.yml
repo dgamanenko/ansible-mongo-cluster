@@ -29,4 +29,5 @@
     COMMON_BASE_DIR: /vfq
 
   roles:
+    - common
     - mongo
