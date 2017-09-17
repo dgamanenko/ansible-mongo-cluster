@@ -1,0 +1,32 @@
+---
+- name: Configure mongo cluster 
+  hosts: mongo
+  become: True
+  gather_facts: True
+  vars:
+    MONGO_CLUSTERED: true
+    MONGO_BIND_IP: 0.0.0.0
+    
+    mongo_cluster_members:
+      - "mongo1"
+      - "mongo2"
+    mongo_cluster_arbiters:
+      - "arbiter1"
+
+    MONGO_CLUSTER_KEY: 'password'
+
+    MONGO_AUTH: true
+
+    MONGO_ADMIN_USER: 'admin'
+    MONGO_ADMIN_PASSWORD: 'password'
+
+    # MONGO_USERS:
+    #   - user: test
+    #     password: password
+    #     database: test
+    #     roles: readWrite
+
+    COMMON_BASE_DIR: /vfq
+
+  roles:
+    - mongo
