@@ -4,6 +4,8 @@
   become: True
   gather_facts: True
   vars:
+    hosts_file: /etc/hosts
+
     MONGO_CLUSTERED: true
     MONGO_BIND_IP: 0.0.0.0
     

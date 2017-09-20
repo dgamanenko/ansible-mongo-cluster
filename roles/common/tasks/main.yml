@@ -1,17 +1,31 @@
+- name: apt update
+  apt: update_cache=yes cache_valid_time=3600
+  register: apt_result
+  until: apt_result|success
+  retries: 3
+  delay: 1
+  become: yes
+  ignore_errors: yes
+
+- name: retry if needed using command apt-get update
+  shell: 'apt-get update'
+  become: true
+  when: apt_result|failed
+
 - name: Install base packages
   apt:
-    name: "{{ item }}"
+    name: python-pip
     state: latest
     update_cache: yes
-  with_items:
-    - python-pip
+#  with_items:
+#    - "python-pip"
   tags:
     - install
     - install:base
 
 - name: Create the hosts file for all machines
-  template:
-    src: hosts.j2
+  copy:
+    src: "{{ hosts_file }}"
     dest: /etc/hosts
   tags:
     - install

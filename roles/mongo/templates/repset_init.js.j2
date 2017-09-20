@@ -5,6 +5,13 @@ db.auth( '{{ MONGO_ADMIN_USER }}', '{{ MONGO_ADMIN_PASSWORD }}');
 {# Generate a list of hosts if no cluster members are give. Otherwise use the
    hosts provided in the variable.
 #}
+
+{%- if mongo_cluster_arbiters|length == 0 -%}
+  {%- set arbiter_hosts = [] -%}
+{%- else -%}
+  {%- set arbiter_hosts = mongo_cluster_arbiters -%}
+{%- endif -%}
+
 {%- if mongo_cluster_members|length == 0 -%}
   {%- set hosts = [] -%}
 {%- else -%}
@@ -21,13 +28,6 @@ rs.initiate(config)
 sleep(30000)
 rs.slaveOk()
 printjson(rs.status())
-
-{%- if mongo_cluster_arbiters|length == 0 -%}
-  {%- set arbiter_hosts = [] -%}
-{%- else -%}
-  {%- set arbiter_hosts = mongo_cluster_arbiters -%}
-{%- endif -%}
-
 
 // Check that the cluster is ok
 if(!rs.status().ok) { throw 'Mongo Cluster Not Ok';}
